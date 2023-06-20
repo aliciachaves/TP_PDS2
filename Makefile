@@ -12,7 +12,7 @@ ${TARGET}: ${BUILD}/normalize.o ${BUILD}/readfile.o ${BUILD}/main.o
 ${BUILD}/normalize.o: ${INCLUDE}/normalize.hpp ${SRC}/normalize.cpp
 	${CC} ${CFLAGS} -I ${INCLUDE}/ -c ${SRC}/normalize.cpp -o ${BUILD}/normalize.o
 
-${BUILD}/readfile.o: ${INCLUDE}/readfile.hpp ${SRC}/readfile.cpp
+${BUILD}/readfile.o: ${INCLUDE}/readfile.hpp ${INCLUDE}/normalize.hpp ${SRC}/readfile.cpp
 	${CC} ${CFLAGS} -I ${INCLUDE}/ -c ${SRC}/readfile.cpp -o ${BUILD}/readfile.o
 
 ${BUILD}/main.o: ${INCLUDE}/normalize.hpp ${INCLUDE}/readfile.hpp ${SRC}/main.cpp
