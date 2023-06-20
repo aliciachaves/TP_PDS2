@@ -1,12 +1,8 @@
 #include <iostream>
-#include <fstream>
 #include <string>
-#include <sstream>
 #include <map>
-#include <dirent.h>
 #include "readfile.hpp"
 #include "normalize.hpp"
-
 
 
 int main() {
@@ -20,12 +16,7 @@ int main() {
         if (palavra.first != "\n") {
             std::cout << "\n" << palavra.first;
             for (const auto& arquivo : palavra.second) {
-                if (palavra.second.empty()) {
-                 std::cout << " (" << arquivo.first << ", " << arquivo.second << ")";
-                }
-                else {
-                    std::cout << ", (" << arquivo.first << ", " << arquivo.second << ")";
-                }
+                    std::cout << " (" << arquivo.first << ", " << arquivo.second << ")";
             }
         }
     }
