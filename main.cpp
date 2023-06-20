@@ -5,15 +5,6 @@
 #include <map>
 #include <dirent.h>
 
-//teste
-
-std::string normalizarPalavra(const std::string& palavra) {
-    std::string palavraNormalizada;
-    for (char c : palavra) {
-        palavraNormalizada += std::tolower(c);
-    }
-    return palavraNormalizada;
-}
 
 std::map<std::string, std::map<std::string, int>> lerArquivosDaPasta(const std::string& pasta) {
 
@@ -47,13 +38,13 @@ std::map<std::string, std::map<std::string, int>> lerArquivosDaPasta(const std::
                         palavra += "";
                     }
                     else if (!palavra.empty()) {
-                        conteudoNormalizado += normalizarPalavra(palavra) + " ";
+                        conteudoNormalizado += palavra + " ";
                         palavra.clear();
                     }
                 }
 
                 if (!palavra.empty()) {
-                    conteudoNormalizado += normalizarPalavra(palavra) + " ";
+                    conteudoNormalizado += palavra + " ";
                 }
 
                 std::istringstream iss(conteudoNormalizado);
