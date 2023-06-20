@@ -96,7 +96,7 @@ std::map<std::string, std::map<std::string, int>> lerArquivosDaPasta(const std::
 }
 
 int main() {
-    std::string pasta = "/home/joselinux_/pds2/documentos_teste_tp2";
+    std::string pasta = "/home/alicia/TP_PDS2/documentos_teste_tp2";
 
     std::map<std::string, std::map<std::string, int>> ocorrencias = lerArquivosDaPasta(pasta);
 
