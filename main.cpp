@@ -5,6 +5,8 @@
 #include <map>
 #include <dirent.h>
 
+//teste
+
 std::string normalizarPalavra(const std::string& palavra) {
     std::string palavraNormalizada;
     for (char c : palavra) {
