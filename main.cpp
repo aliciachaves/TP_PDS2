@@ -3,8 +3,7 @@
 #include <string>
 #include <sstream>
 #include <map>
-#include <windows.h>
-
+#include <dirent.h>
 
 std::string normalizarPalavra(const std::string& palavra) {
     std::string palavraNormalizada;
@@ -18,91 +17,84 @@ std::map<std::string, std::map<std::string, int>> lerArquivosDaPasta(const std::
 
     std::map<std::string, std::map<std::string, int>> ocorrencias;
 
-    WIN32_FIND_DATAA findData;
-    HANDLE hFind = FindFirstFileA((pasta + "\\*").c_str(), &findData);
+    DIR* dir;
+    struct dirent* ent;
 
-    if (hFind == INVALID_HANDLE_VALUE) {
-        std::cerr << "Erro ao abrir a pasta." << std::endl;
-        return ocorrencias;
-    }
+    if ((dir = opendir(pasta.c_str())) != NULL) {
+        while ((ent = readdir(dir)) != NULL) {
+            std::string nomeArquivo = ent->d_name;
 
-    do {
-        if (findData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
-            continue;
-        }
+            std::ifstream arquivo(pasta + "/" + nomeArquivo);
 
-        std::string nomeArquivo = findData.cFileName;
-        std::ifstream arquivo(pasta + "\\" + nomeArquivo);
+            if (arquivo) {
+                std::string conteudo;
+                std::string linha;
 
-        if (arquivo) {
-            std::string conteudo;
-            std::string linha;
-
-            while (std::getline(arquivo, linha)) {
-                conteudo += linha + "\n";
-            }
-
-            std::string conteudoNormalizado;
-            std::string palavra;
-
-            for (char c : conteudo) {
-                if (std::isalpha(c) || c == ' ' || c == '\n') { // é preciso a condição de espaço e quebra de linha?
-                    palavra += std::tolower(c);
+                while (std::getline(arquivo, linha)) {
+                    conteudo += linha + "\n";
                 }
-                else if (!std::isalpha(c)) {
-                    palavra += "";
+
+                std::string conteudoNormalizado;
+                std::string palavra;
+
+                for (char c : conteudo) {
+                    if (std::isalpha(c) || c == ' ' || c == '\n') {
+                        palavra += std::tolower(c);
+                    }
+                    else if (!std::isalpha(c)) {
+                        palavra += "";
+                    }
+                    else if (!palavra.empty()) {
+                        conteudoNormalizado += normalizarPalavra(palavra) + " ";
+                        palavra.clear();
+                    }
                 }
-                else if (!palavra.empty()) {
+
+                if (!palavra.empty()) {
                     conteudoNormalizado += normalizarPalavra(palavra) + " ";
-
-                    palavra.clear();
                 }
-            }
 
-            if (!palavra.empty()) {
-                conteudoNormalizado += normalizarPalavra(palavra) + " ";
-            }
+                std::istringstream iss(conteudoNormalizado);
 
-            //std::string str = normalizarPalavra(palavra);
-            std::istringstream iss(conteudoNormalizado);
+                do {
+                    std::string word;
+                    iss >> word;
 
-            do {
-                std::string word;
-                iss >> word;
-
-                if (ocorrencias.empty()) {
-                    ocorrencias.insert(std::make_pair(word, std::map<std::string, int>{ {nomeArquivo, 1} }));
-                }
-                else {
-                    bool found = false;
-                    for (auto& ocorrencia : ocorrencias) {
-                        if (ocorrencia.first == word) {
-                            ocorrencia.second[nomeArquivo]++;
-                            found = true;
-                            break;
+                    if (ocorrencias.empty()) {
+                        ocorrencias.insert(std::make_pair(word, std::map<std::string, int>{ {nomeArquivo, 1} }));
+                    }
+                    else {
+                        bool found = false;
+                        for (auto& ocorrencia : ocorrencias) {
+                            if (ocorrencia.first == word) {
+                                ocorrencia.second[nomeArquivo]++;
+                                found = true;
+                                break;
+                            }
+                        }
+                        if (!found) {
+                            ocorrencias.insert(std::make_pair(word, std::map<std::string, int>{ {nomeArquivo, 1}}));
                         }
                     }
-                    if (!found) {
-                        ocorrencias.insert(std::make_pair(word, std::map<std::string, int>{ {nomeArquivo, 1}}));
-                    }
-                }
+                } while (iss);
 
-            } while (iss);
-
-            arquivo.close();
+                arquivo.close();
+            }
+            else {
+                std::cerr << "Erro ao abrir o arquivo: " << nomeArquivo << std::endl;
+            }
         }
-        else {
-            std::cerr << "Erro ao abrir o arquivo: " << nomeArquivo << std::endl;
-        }
-    } while (FindNextFileA(hFind, &findData));
-
-    FindClose(hFind);
+        closedir(dir);
+    }
+    else {
+        std::cerr << "Erro ao abrir a pasta." << std::endl;
+    }
 
     return ocorrencias;
 }
 
 int main() {
-    std::string pasta = "C:\\Users\\Clara Garcia\\OneDrive\\Documentos\\documentos_teste_tp2";
+    std::string pasta = "/home/joselinux_/pds2/documentos_teste_tp2";
 
     std::map<std::string, std::map<std::string, int>> ocorrencias = lerArquivosDaPasta(pasta);
 
