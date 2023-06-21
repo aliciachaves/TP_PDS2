@@ -8,22 +8,28 @@
 
 
 int main() {
-    //std::string folder = "/home/joselinux_/pds2/TP_PDS2/documentos_teste_tp2";
+    try {
+        std::string folder;
+        std::cout << "Digite o caminho da pasta que deseja buscar: " << std::endl;
+        std::cin >> folder;
 
-    std::string folder;
-    std::cout << "Digite o caminho da pasta que deseja buscar: " << std::endl;
-    std::cin >> folder;
+        ReadFile read;
 
-    ReadFile read;
+        std::map<std::string, std::map<std::string, int>> frequency = read.readFromFolder(folder);
 
-    std::map<std::string, std::map<std::string, int>> frequency = read.readFromFolder(folder);
+        Search s;
 
-    Search s;
-
-    s.readWords();
-    std::vector<std::pair<std::string, int>> orderedVec = s.returnFiles(frequency);
-    for(const auto& pair : orderedVec){
-            std::cout << pair.first << " " << pair.second << std::endl;
+        s.readWords();
+        std::vector<std::pair<std::string, int>> orderedVec = s.returnFiles(frequency);
+        for(const auto& pair : orderedVec){
+                std::cout << pair.first << " " << pair.second << std::endl;
+        }
+    } catch (dirNotOpenException& e) {
+        std::cout << e.what() << std::endl;
+    } catch (fileNotOpenException& e) {
+        std::cout << e.what() << std::endl;
+    } catch (std::exception& e) {
+        std::cout << e.what() << std::endl;
     }
 
     return 0;

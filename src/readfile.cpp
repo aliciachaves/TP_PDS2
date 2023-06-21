@@ -7,12 +7,14 @@ std::map<std::string, std::map<std::string, int>> ReadFile::readFromFolder(const
     DIR* dir;
     struct dirent* ent;
 
-    if ((dir = opendir(folder.c_str())) != NULL) {
+    if ((dir = opendir(folder.c_str())) == NULL) throw dirNotOpenException();
+    else {
         while ((ent = readdir(dir)) != NULL) {
             std::string fileName = ent->d_name;
             std::ifstream file(folder + "/" + fileName);
 
-            if (file) {
+            if (!file) throw fileNotOpenException();
+            else {
                 std::string content;
                 std::string line;
 
@@ -50,14 +52,8 @@ std::map<std::string, std::map<std::string, int>> ReadFile::readFromFolder(const
 
                 file.close();
             }
-            else {
-                std::cerr << "Erro ao abrir o arquivo: " << fileName << std::endl;
-            }
         }
         closedir(dir);
-    }
-    else {
-        std::cerr << "Erro ao abrir a pasta." << std::endl;
     }
 
     return this->frequency;

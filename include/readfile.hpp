@@ -8,6 +8,18 @@
 #include <map>
 #include <dirent.h>
 
+struct dirNotOpenException : public std::exception {
+   const char * what () const throw () {
+      return "Diretório não encontrado";
+   }
+};
+
+struct fileNotOpenException : public std::exception {
+   const char * what () const throw () {
+      return "Arquivo não encontrado";
+   }
+};
+
 class ReadFile {
     public:
         std::map<std::string, std::map<std::string, int>> readFromFolder(const std::string& folder);
