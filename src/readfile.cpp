@@ -2,56 +2,56 @@
 #include "normalize.hpp"
 
 
-std::map<std::string, std::map<std::string, int>> ReadFile::lerArquivosDaPasta(const std::string& pasta) {
+std::map<std::string, std::map<std::string, int>> ReadFile::readFromFolder(const std::string& folder) {
 
     DIR* dir;
     struct dirent* ent;
 
-    if ((dir = opendir(pasta.c_str())) != NULL) {
+    if ((dir = opendir(folder.c_str())) != NULL) {
         while ((ent = readdir(dir)) != NULL) {
-            std::string nomeArquivo = ent->d_name;
-            std::ifstream arquivo(pasta + "/" + nomeArquivo);
+            std::string fileName = ent->d_name;
+            std::ifstream file(folder + "/" + fileName);
 
-            if (arquivo) {
-                std::string conteudo;
-                std::string linha;
+            if (file) {
+                std::string content;
+                std::string line;
 
-                while (std::getline(arquivo, linha)) {
-                    conteudo += linha + "\n";
+                while (std::getline(file, line)) {
+                 content += line + "\n";
                 }
 
 
                 Normalize n;
-                std::string conteudoNormalizado = n.normalizeContent(conteudo);
+                std::string normalizedcontent = n.normalizeContent(content);
 
-                std::istringstream iss(conteudoNormalizado);
+                std::istringstream iss(normalizedcontent);
 
                 do {
                     std::string word;
                     iss >> word;
 
-                    if (this->ocorrencias.empty()) {
-                        this->ocorrencias.insert(std::make_pair(word, std::map<std::string, int>{ {nomeArquivo, 1} }));
+                    if (this->frequency.empty()) {
+                        this->frequency.insert(std::make_pair(word, std::map<std::string, int>{ {fileName, 1} }));
                     }
                     else {
                         bool found = false;
-                        for (auto& ocorrencia : this->ocorrencias) {
+                        for (auto& ocorrencia : this->frequency) {
                             if (ocorrencia.first == word) {
-                                ocorrencia.second[nomeArquivo]++;
+                                ocorrencia.second[fileName]++;
                                 found = true;
                                 break;
                             }
                         }
                         if (!found) {
-                            this->ocorrencias.insert(std::make_pair(word, std::map<std::string, int>{ {nomeArquivo, 1}}));
+                            this->frequency.insert(std::make_pair(word, std::map<std::string, int>{ {fileName, 1}}));
                         }
                     }
                 } while (iss);
 
-                arquivo.close();
+                file.close();
             }
             else {
-                std::cerr << "Erro ao abrir o arquivo: " << nomeArquivo << std::endl;
+                std::cerr << "Erro ao abrir o arquivo: " << fileName << std::endl;
             }
         }
         closedir(dir);
@@ -60,5 +60,5 @@ std::map<std::string, std::map<std::string, int>> ReadFile::lerArquivosDaPasta(c
         std::cerr << "Erro ao abrir a pasta." << std::endl;
     }
 
-    return this->ocorrencias;
+    return this->frequency;
 }

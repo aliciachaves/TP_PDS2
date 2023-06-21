@@ -14,5 +14,4 @@ void Search::normalizeSearch(){
     for (int i = 0; i < words.size(); i++){
         words[i] = n.normalizeContent(words[i]);
     }
-}
-
+    

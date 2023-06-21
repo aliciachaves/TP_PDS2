@@ -1,27 +1,27 @@
 #include "normalize.hpp"
 
 
-std::string Normalize::normalizeContent(std::string conteudo){
-    std::string conteudoNormalizado;
-    std::string palavra;
+std::string Normalize::normalizeContent(std::string content){
+    std::string n_content;
+    std::string word;
 
-    for (char c : conteudo) {
+    for (char c : content) {
 
                 if (std::isalpha(c) || c == ' ' || c == '\n') {
-                    palavra += std::tolower(c);
+                    word += std::tolower(c);
                     }
                 else if (!std::isalpha(c)) {
-                    palavra += "";
+                    word += "";
                     }
-                else if (!palavra.empty()) {
-                        conteudoNormalizado += palavra + " ";
-                        palavra.clear();
+                else if (!word.empty()) {
+                        n_content += word + " ";
+                        word.clear();
                     }
                 }   
 
-                if (!palavra.empty()) {
-                    conteudoNormalizado += palavra + " ";
+                if (!word.empty()) {
+                    n_content += word + " ";
                 }
 
-    return conteudoNormalizado;
+    return n_content;
 }

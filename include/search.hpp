@@ -23,5 +23,3 @@ class Search{
         std::vector <std::string> words;
 
 };
-
-#endif

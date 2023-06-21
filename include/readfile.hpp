@@ -10,9 +10,9 @@
 
 class ReadFile {
     public:
-        std::map<std::string, std::map<std::string, int>> lerArquivosDaPasta(const std::string& pasta);
+        std::map<std::string, std::map<std::string, int>> readFromFolder(const std::string& folder);
     private:
-        std::map<std::string, std::map<std::string, int>> ocorrencias;
+        std::map<std::string, std::map<std::string, int>> frequency;
 };
 
 #endif

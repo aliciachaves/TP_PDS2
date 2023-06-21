@@ -6,7 +6,7 @@
 
 class Normalize{
     public:
-        std::string normalizeContent(std::string conteudo);
+        std::string normalizeContent(std::string content);
 };
 
 #endif
