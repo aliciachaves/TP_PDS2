@@ -19,7 +19,7 @@ int main() {
     s.readWords();
     std::vector<std::pair<std::string, int>> orderedVec = s.returnFiles(frequency);
     for(const auto& pair : orderedVec){
-            std::cout << pair.first << std::endl;
+            std::cout << pair.first << " " << pair.second << std::endl;
     }
 
     return 0;

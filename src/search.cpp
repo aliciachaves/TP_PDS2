@@ -1,6 +1,7 @@
 #include "search.hpp"
 #include "normalize.hpp"
 #include "readfile.hpp"
+#include <utility>
 #include <algorithm>
 
 void Search::readWords(){
@@ -22,10 +23,12 @@ void Search::normalizeSearch(){
     }
 }
 
-bool compareByValue(const std::pair<std::string, int>& a, const std::pair<std::string, int>& b) {
-    return a.second > b.second;
-}
+bool comparePairs(const std::pair<std::string, int>& pair1, const std::pair<std::string, int>& pair2) {
+    if (pair1.second > pair2.second) return true;
+    else if (pair1.second < pair2.second) return false;
 
+    return pair1.first < pair2.first;
+}
 
 std::vector<std::pair<std::string, int>> Search::returnFiles(std::map<std::string, std::map<std::string, int>> frequency) {
     
@@ -54,7 +57,8 @@ std::vector<std::pair<std::string, int>> Search::returnFiles(std::map<std::strin
         p.second = f.second;
         sortedVector.push_back(p);
     }
-    std::sort(sortedVector.begin(), sortedVector.end(), compareByValue);
+    
+    std::sort(sortedVector.begin(), sortedVector.end(), comparePairs);
 
     return sortedVector;
 }
