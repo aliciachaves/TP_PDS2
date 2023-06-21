@@ -8,7 +8,11 @@
 
 
 int main() {
-    std::string folder = "/home/joselinux_/pds2/TP_PDS2/documentos_teste_tp2";
+    //std::string folder = "/home/joselinux_/pds2/TP_PDS2/documentos_teste_tp2";
+
+    std::string folder;
+    std::cout << "Digite o caminho da pasta que deseja buscar: " << std::endl;
+    std::cin >> folder;
 
     ReadFile read;
 
