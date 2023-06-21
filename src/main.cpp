@@ -8,7 +8,7 @@
 
 
 int main() {
-    std::string folder = "/home/clara21gt/TP_PDS2/documentos_teste_tp2";
+    std::string folder = "/home/joselinux_/pds2/TP_PDS2/documentos_teste_tp2";
 
     ReadFile read;
 
