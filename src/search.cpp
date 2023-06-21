@@ -4,22 +4,22 @@
 #include <utility>
 #include <algorithm>
 
-void Search::readWords(){
-    std::string w;
-    while(std::cin >> w){
-        if (w == "0"){
-            break;
-        }
-        words.push_back(w);
-    }
-}
 
-void Search::normalizeSearch(){
-    Normalize n;
-    for (const auto& w : words){
-        n.normalizeContent(w);
+ void Search::readWords() {
+        std::string line;
+        std::cout << "Pressione Enter para finalizar a busca." << std::endl;
+
+        while (std::getline(std::cin, line) && !line.empty()) {
+            std::istringstream iss(line);
+            std::string word;
+            while (iss >> word) {
+                Normalize n;
+                std::string nword = n.normalizeContent(word); //não deu certo
+                std:: cout << word << " " << nword << std::endl;
+                this->words.push_back(nword);
+            }
+        }
     }
-}
 
 bool comparePairs(const std::pair<std::string, int>& pair1, const std::pair<std::string, int>& pair2) {
     if (pair1.second > pair2.second) return true;
@@ -29,13 +29,13 @@ bool comparePairs(const std::pair<std::string, int>& pair1, const std::pair<std:
 }
 
 std::vector<std::pair<std::string, int>> Search::returnFiles(std::map<std::string, std::map<std::string, int>> frequency) {
-    
-    normalizeSearch();
 
     std::map<std::string, File> files;
 
-    for (const auto& w : words) {
+    for (const auto& w : this->words) {
+        std::cout << w << std::endl;
         for (const auto& f : frequency.find(w)->second) {
+            std::cout << w << std::endl;
             files[f.first].hits += f.second;
             files[f.first].freq++;
             files[f.first].nome = f.first;
@@ -45,22 +45,18 @@ std::vector<std::pair<std::string, int>> Search::returnFiles(std::map<std::strin
     int len = words.size();
     for (const auto& f : files) {
         if (f.second.freq == len) {
-            repeatedFiles[f.first] = files[f.first].hits;
+            fullFiles[f.first] = files[f.first].hits;
         }
     }
 
-    for (const auto& f : repeatedFiles) {
+    for (const auto& f : fullFiles) {
         std::pair<std::string, int> p;
         p.first = f.first;
         p.second = f.second;
         sortedVector.push_back(p);
     }
+    
+    std::sort(sortedVector.begin(), sortedVector.end(), comparePairs);
 
-    if (sortedVector.empty()) {
-        throw searchNotFoundException();
-    } else {
-        std::sort(sortedVector.begin(), sortedVector.end(), comparePairs);
-        return sortedVector;
-    }
-
+    return sortedVector;
 }

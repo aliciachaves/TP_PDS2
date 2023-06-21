@@ -14,13 +14,12 @@ struct File{
 
 class Search{
     public:
-        void normalizeSearch();
         void readWords();
         std::vector<std::pair<std::string, int>> returnFiles(std::map<std::string, std::map<std::string, int>> frequency);
     
     private:
         std::vector <std::string> words;
-        std::map <std::string, int> repeatedFiles;
+        std::map <std::string, int> fullFiles; 
         std::vector<std::pair<std::string, int>> sortedVector;
 
 };
