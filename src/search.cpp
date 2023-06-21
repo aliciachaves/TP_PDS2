@@ -5,7 +5,12 @@
 
 void Search::readWords(){
     std::string w;
+    std::cout << "Digite as palavras que deseja buscar: " << std::endl;
+    std::cout << "****Para finalizar a busca, digite 0" << std::endl;
     while(std::cin >> w){
+        if (w == "0"){
+            break;
+        }
         words.push_back(w);
     }
 }
