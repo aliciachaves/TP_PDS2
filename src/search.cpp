@@ -13,13 +13,17 @@
             std::istringstream iss(line);
             std::string word;
             while (iss >> word) {
-                Normalize n;
-                std::string nword = n.normalizeContent(word); //não deu certo
-                std:: cout << word << " " << nword << std::endl;
-                this->words.push_back(nword);
+                words.push_back(word);
             }
         }
     }
+
+void Search::normalizeSearch(){
+    Normalize n;
+    for (const auto& w : words){
+        n.normalizeContent(w);
+    }
+}
 
 bool comparePairs(const std::pair<std::string, int>& pair1, const std::pair<std::string, int>& pair2) {
     if (pair1.second > pair2.second) return true;
@@ -29,13 +33,13 @@ bool comparePairs(const std::pair<std::string, int>& pair1, const std::pair<std:
 }
 
 std::vector<std::pair<std::string, int>> Search::returnFiles(std::map<std::string, std::map<std::string, int>> frequency) {
+    
+    normalizeSearch();
 
     std::map<std::string, File> files;
 
-    for (const auto& w : this->words) {
-        std::cout << w << std::endl;
+    for (const auto& w : words) {
         for (const auto& f : frequency.find(w)->second) {
-            std::cout << w << std::endl;
             files[f.first].hits += f.second;
             files[f.first].freq++;
             files[f.first].nome = f.first;
