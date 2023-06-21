@@ -1,6 +1,7 @@
 #include "search.hpp"
 #include "normalize.hpp"
 #include "readfile.hpp"
+#include <algorithm>
 
 void Search::readWords(){
     std::string w;
@@ -22,7 +23,7 @@ bool compareByValue(const std::pair<std::string, int>& a, const std::pair<std::s
 
 std::vector<std::pair<std::string, int>> Search::returnFiles(std::map<std::string, std::map<std::string, int>> frequency) {
     
-    this->words.normalizeSearch();
+    normalizeSearch();
 
     std::map<std::string, File> files;
 
