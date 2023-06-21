@@ -22,9 +22,8 @@
         }
     }
 
-
+// função de comparação utilizada para ordenar o vetor de pares de strings e inteiros
 bool comparePairs(const std::pair<std::string, int>& pair1, const std::pair<std::string, int>& pair2) {
-    // função de comparação utilizada para ordenar o vetor de pares de strings e inteiros
     if (pair1.second > pair2.second) return true;
     else if (pair1.second < pair2.second) return false;
 
@@ -47,6 +46,7 @@ std::vector<std::pair<std::string, int>> Search::returnFiles(std::map<std::strin
     }
 
     int len = words.size();
+    
     // verifica se os arquivos encontrados são arquivos completos (todas as palavras foram encontradas)
     for (const auto& f : files) {
         if (f.second.freq == len) {

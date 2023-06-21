@@ -32,14 +32,16 @@ int main() {
         //função que retorna um vetor de pares, onde cada par contém o nome do arquivo e o 
         //número de ocorrências das palavras de busca nesse arquivo
         std::vector<std::pair<std::string, int>> orderedVec = s.returnFiles(frequency);
+
         //itera sobre cada par, verificando se o número de ocorrências do par atual é igual ao do primeiro par do vetor
         for(const auto& pair : orderedVec){
             if (pair.second == orderedVec[0].second){
-                std::cout << GREEN << pair.first << " " << pair.second << std::endl;
+                std::cout << GREEN << pair.first << std::endl;
             } else {
-                std::cout << YELLOW << pair.first << " " << pair.second << std::endl;
+                std::cout << YELLOW << pair.first << std::endl;
             }
         }
+
     //tratam exceções que podem ser lançadas durante a execução do programa e exibem mensagens de erros cospondentes
     } catch (dirNotOpenException& e) {
         std::cout << RED << e.what() << std::endl;
