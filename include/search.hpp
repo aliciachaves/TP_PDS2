@@ -21,6 +21,8 @@ class Search{
     
     private:
         std::vector <std::string> words;
+        std::map <std::string, int> repeatedFiles;
+        std::vector<std::pair<std::string, int>> sortedVector;
 
 };
 
