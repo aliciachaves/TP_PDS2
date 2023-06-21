@@ -2,8 +2,10 @@
 
 
 std::string Normalize::normalizeContent(std::string content){
+
     // string para armazenar o conteúdo normalizado
     std::string n_content;
+
     // string temporária para construir cada palavra normalizada
     std::string word;
 
@@ -13,16 +15,7 @@ std::string Normalize::normalizeContent(std::string content){
                 //minúsculo e adiciona à palavra temporária
                 if (std::isalpha(c) || c == ' ' || c == '\n') {
                     word += std::tolower(c);
-                    }
-                //se o caractere não for uma letra então mantém palavra vazia
-                else if (!std::isalpha(c)) {
-                    word += "";
-                    }
-                // se a palavra temporária não estiver vazia adiciona a palavra normalizada à string final
-                else if (!word.empty()) {
-                        n_content += word + " ";
-                        word.clear();
-                    }
+                    }           
                 }   
                 // se a palavra temporária não estiver vazia no final do loop 
                 //adiciona a última palavra normalizada à string final

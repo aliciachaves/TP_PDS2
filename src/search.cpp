@@ -9,21 +9,19 @@
         std::string line;
 
         while (std::getline(std::cin, line) && !line.empty()) {
-            std::istringstream iss(line);
+            
             std::string word;
+
+            Normalize n;
+            std::string nline = n.normalizeContent(line);
+            std::istringstream iss(nline);
+
             while (iss >> word) {
                 words.push_back(word);
             }
         }
     }
 
-void Search::normalizeSearch(){
-    // normaliza as palavras buscadas
-    Normalize n;
-    for (const auto& w : words){
-        n.normalizeContent(w);
-    }
-}
 
 bool comparePairs(const std::pair<std::string, int>& pair1, const std::pair<std::string, int>& pair2) {
     // função de comparação utilizada para ordenar o vetor de pares de strings e inteiros
@@ -36,7 +34,6 @@ bool comparePairs(const std::pair<std::string, int>& pair1, const std::pair<std:
 // retorna os arquivos correspondentes à busca, ordenados por número de hits
 std::vector<std::pair<std::string, int>> Search::returnFiles(std::map<std::string, std::map<std::string, int>> frequency) {
 
-    normalizeSearch();
 
     std::map<std::string, File> files;
 

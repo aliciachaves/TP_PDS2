@@ -15,7 +15,7 @@
 int main() {
     try {
         //std::string folder = "./documentos/.";
-        std::string folder = "/home/clara21gt/TP_PDS2/documentos_teste_tp2";
+        std::string folder = "/home/alicia/TP_PDS2/documentos_teste_tp2";
 
         ReadFile read;
 

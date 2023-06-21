@@ -15,8 +15,7 @@ struct File{
 
 class Search{
     public:
-        //função responsável por normalizar as palavras de busca
-        void normalizeSearch();
+
         //função responsável por ler as palavras de busca fornecidas pelo usuário
         void readWords();
         std::vector<std::pair<std::string, int>> returnFiles(std::map<std::string, std::map<std::string, int>> frequency);
