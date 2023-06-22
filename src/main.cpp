@@ -15,7 +15,7 @@
 int main() {
     try {
         //std::string folder = "./documentos/.";
-        std::string folder = "/home/alicia/TP_PDS2/documentos_teste_tp2";
+        std::string folder = "/home/joselinux_/pds2/TP_PDS2/documentos_teste_tp2";
 
         ReadFile read;
 
@@ -24,6 +24,7 @@ int main() {
         Search s;
 
         std::cout << BLUE << "Digite as palavras que deseja buscar: " << std::endl;
+        std::cout << "Pressione Enter para finalizar a busca." << std::endl;
         s.readWords();
 
         std::vector<std::pair<std::string, int>> orderedVec = s.returnFiles(frequency);

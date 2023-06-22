@@ -7,7 +7,6 @@
 
  void Search::readWords() {
         std::string line;
-        std::cout << "Pressione Enter para finalizar a busca." << std::endl;
 
         while (std::getline(std::cin, line) && !line.empty()) {
             std::istringstream iss(line);
@@ -60,7 +59,9 @@ std::vector<std::pair<std::string, int>> Search::returnFiles(std::map<std::strin
         sortedVector.push_back(p);
     }
     
-    std::sort(sortedVector.begin(), sortedVector.end(), comparePairs);
-
-    return sortedVector;
+    if (sortedVector.empty()) throw searchNotFoundException();
+    else {
+        std::sort(sortedVector.begin(), sortedVector.end(), comparePairs);
+        return sortedVector;
+    }
 }
