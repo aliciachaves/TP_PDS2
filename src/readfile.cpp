@@ -1,7 +1,7 @@
 #include "readfile.hpp"
 #include "normalize.hpp"
 
-
+// lê os arquivos de um diretório e cria um índice invertido com as palavras encontradas em cada arquivo
 std::map<std::string, std::map<std::string, int>> ReadFile::readFromFolder(const std::string& folder) {
 
     DIR* dir;
