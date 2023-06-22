@@ -14,8 +14,8 @@
 
 int main() {
     try {
-        //std::string folder = "./documentos/.";
-        std::string folder = "/home/alicia/TP_PDS2/documentos_teste_tp2";
+        //caminho para a pasta que contém os arquivos a serem lidos
+        std::string folder = "./documentos/.";
 
         ReadFile read;
 
