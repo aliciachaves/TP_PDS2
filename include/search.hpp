@@ -12,7 +12,6 @@ struct File{
     int hits;    
 };
 
-
 class Search{
     public:
         void normalizeSearch();
@@ -24,6 +23,12 @@ class Search{
         std::map <std::string, int> repeatedFiles;
         std::vector<std::pair<std::string, int>> sortedVector;
 
+};
+
+struct searchNotFoundException : public std::exception {
+   const char * what () const throw () {
+      return "Nenhum arquivo corresponde à busca";
+   }
 };
 
 #endif
