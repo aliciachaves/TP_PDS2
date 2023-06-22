@@ -55,7 +55,7 @@ int main() {
         std::cout << RED << "Erro desconhecido" << std::endl;
     }
 
-    std::cout << "*************" << RESET << std::endl;
+    std::cout << RESET << std::endl;
 
     return 0;
 }
